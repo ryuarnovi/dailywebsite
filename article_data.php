@@ -15,8 +15,17 @@ $hasil = $conn->query($sql);
   <title>Article - My Daily Journal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <script>
+    // DARK MODE TOGGLE - WORKING VERSION
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+  </script>
 </head>
-<body class="bg-gradient-to-b from-[#e5edf5] to-[#f5e5eb] min-h-screen text-gray-800">
+<body class="bg-gradient-to-b from-[#e5edf5] to-[#f5e5eb] dark:from-gray-900 dark:to-gray-800 min-h-screen text-gray-800 dark:text-gray-100 transition-colors duration-300">
 <?php include "navbar.php"; ?>
 
 <section class="max-w-5xl mx-auto px-2 py-16">
@@ -73,22 +82,22 @@ $hasil = $conn->query($sql);
 
 <!-- Modal Tambah Artikel -->
 <div id="modalTambah" class="fixed inset-0 bg-black/30 flex items-center justify-center z-50 hidden">
-  <div class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md relative">
+  <div class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 w-full max-w-md relative text-gray-800 dark:text-gray-100">
     <button class="absolute top-2 right-3 text-gray-400 hover:text-red-500 text-2xl"
       onclick="$('#modalTambah').addClass('hidden')">&times;</button>
     <form id="formTambahArticle" enctype="multipart/form-data" class="space-y-4">
       <h2 class="text-xl font-bold mb-4 text-pink-600">Tambah Artikel</h2>
       <div>
         <label class="font-semibold text-pink-700 block mb-1">Judul</label>
-        <input type="text" name="judul" required class="w-full border border-pink-200 rounded px-3 py-2 focus:ring-2 focus:ring-pink-200">
+        <input type="text" name="judul" required class="w-full border border-pink-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded px-3 py-2 focus:ring-2 focus:ring-pink-200">
       </div>
       <div>
         <label class="font-semibold text-pink-700 block mb-1">Isi</label>
-        <textarea name="isi" rows="3" required class="w-full border border-pink-200 rounded px-3 py-2 focus:ring-2 focus:ring-pink-200"></textarea>
+        <textarea name="isi" rows="3" required class="w-full border border-pink-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded px-3 py-2 focus:ring-2 focus:ring-pink-200"></textarea>
       </div>
       <div>
         <label class="font-semibold text-pink-700 block mb-1">Gambar</label>
-        <input type="file" name="gambar" accept="image/*" class="w-full border border-pink-200 rounded px-2 py-2 file:bg-pink-100">
+        <input type="file" name="gambar" accept="image/*" class="w-full border border-pink-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded px-2 py-2 file:bg-pink-100 dark:file:bg-pink-900 file:text-pink-700 dark:file:text-pink-300">
       </div>
       <div class="text-right">
         <button type="button" onclick="$('#modalTambah').addClass('hidden')"
@@ -121,6 +130,20 @@ $('#formTambahArticle').on('submit', function(e){
     error: function(){ alert('Gagal upload!'); }
   });
 });
+
+// DARK MODE TOGGLE BUTTON (optional, jika ingin tombol manual)
+// Uncomment jika ingin tombol manual
+// $(document).ready(function(){
+//   $('#theme-toggle').on('click', function(){
+//     if (document.documentElement.classList.contains('dark')) {
+//       document.documentElement.classList.remove('dark');
+//       localStorage.setItem('color-theme', 'light');
+//     } else {
+//       document.documentElement.classList.add('dark');
+//       localStorage.setItem('color-theme', 'dark');
+//     }
+//   });
+// });
 </script>
 </body>
 </html>
